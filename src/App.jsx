@@ -21,6 +21,7 @@ import LightModeRoundedIcon from "@mui/icons-material/LightModeRounded";
 import DarkModeRoundedIcon from "@mui/icons-material/DarkModeRounded";
 import { createAppTheme } from "./theme";
 import AdminSidebar from "./components/AdminSidebar";
+import { AdminPageSkeleton } from "./components/Common";
 import {
   AddMoviePage,
   AdvancedAnalyticsPage,
@@ -254,6 +255,17 @@ function App() {
 }
 
 function AdminShell({ activePage, meta, setActivePage, mobileOpen, setMobileOpen, onLogout, mode, onToggleMode }) {
+  const [isPageLoading, setIsPageLoading] = useState(true);
+
+  useEffect(() => {
+    setIsPageLoading(true);
+    const timeoutId = window.setTimeout(() => {
+      setIsPageLoading(false);
+    }, 450);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [activePage]);
+
   const handlePageChange = (pageId) => {
     setActivePage(pageId);
     window.location.hash = `#${pageId}`;
@@ -371,35 +383,41 @@ function AdminShell({ activePage, meta, setActivePage, mobileOpen, setMobileOpen
           </Stack>
         </Paper>
 
-        {activePage === "Dashboard" && <DashboardPage />}
-        {activePage === "Analytics" && <AdvancedAnalyticsPage />}
-        {activePage === "AddMovie" && <AddMoviePage />}
-        {activePage === "CreateShow" && <CreateShowPage />}
-        {activePage === "BlockSeats" && <BlockSeatsPage />}
-        {activePage === "ApproveRefund" && <ApproveRefundPage />}
-        {activePage === "PushOffer" && <PushOfferPage />}
-        {activePage === "ActivityLogs" && <AdminActivityLogsPage />}
-        {activePage === "Movies" && <MoviesPage />}
-        {activePage === "Theatres" && <TheatresPage />}
-        {activePage === "Shows" && <ShowsPage />}
-        {activePage === "SeatLocking" && <SeatLockingPage />}
-        {activePage === "Bookings" && <BookingsPage />}
-        {activePage === "Support" && <SupportPage />}
-        {activePage === "Users" && <UsersPage />}
-        {activePage === "Payments" && <PaymentsPage />}
-        {activePage === "Reviews" && <ReviewsPage />}
-        {activePage === "Notifications" && <NotificationsPage />}
-        {activePage === "Offers" && <OffersPage />}
-        {activePage === "CreateNew" && <CreateNewPage />}
-        {activePage === "NewMovie" && <NewMoviePage />}
-        {activePage === "NewTheatre" && <NewTheatrePage />}
-        {activePage === "NewShow" && <NewShowPage />}
-        {activePage === "NewOffer" && <NewOfferPage />}
-        {activePage === "NewNotification" && <NewNotificationPage />}
-        {activePage === "Settings" && <SettingsPage />}
+        {isPageLoading ? <AdminPageSkeleton /> : renderPage(activePage)}
       </Box>
     </Box>
   );
+}
+
+function renderPage(activePage) {
+  if (activePage === "Dashboard") return <DashboardPage />;
+  if (activePage === "Analytics") return <AdvancedAnalyticsPage />;
+  if (activePage === "AddMovie") return <AddMoviePage />;
+  if (activePage === "CreateShow") return <CreateShowPage />;
+  if (activePage === "BlockSeats") return <BlockSeatsPage />;
+  if (activePage === "ApproveRefund") return <ApproveRefundPage />;
+  if (activePage === "PushOffer") return <PushOfferPage />;
+  if (activePage === "ActivityLogs") return <AdminActivityLogsPage />;
+  if (activePage === "Movies") return <MoviesPage />;
+  if (activePage === "Theatres") return <TheatresPage />;
+  if (activePage === "Shows") return <ShowsPage />;
+  if (activePage === "SeatLocking") return <SeatLockingPage />;
+  if (activePage === "Bookings") return <BookingsPage />;
+  if (activePage === "Support") return <SupportPage />;
+  if (activePage === "Users") return <UsersPage />;
+  if (activePage === "Payments") return <PaymentsPage />;
+  if (activePage === "Reviews") return <ReviewsPage />;
+  if (activePage === "Notifications") return <NotificationsPage />;
+  if (activePage === "Offers") return <OffersPage />;
+  if (activePage === "CreateNew") return <CreateNewPage />;
+  if (activePage === "NewMovie") return <NewMoviePage />;
+  if (activePage === "NewTheatre") return <NewTheatrePage />;
+  if (activePage === "NewShow") return <NewShowPage />;
+  if (activePage === "NewOffer") return <NewOfferPage />;
+  if (activePage === "NewNotification") return <NewNotificationPage />;
+  if (activePage === "Settings") return <SettingsPage />;
+
+  return <DashboardPage />;
 }
 
 function readPageFromHash() {

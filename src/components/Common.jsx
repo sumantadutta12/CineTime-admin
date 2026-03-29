@@ -6,6 +6,7 @@ import {
   Chip,
   Divider,
   Paper,
+  Skeleton,
   Stack,
   Table,
   TableBody,
@@ -324,4 +325,120 @@ function badgeTone(value) {
 
 function formatLabel(value) {
   return value.replace(/([A-Z])/g, " $1").replace(/^./, (char) => char.toUpperCase());
+}
+
+export function AdminPageSkeleton() {
+  return (
+    <PageGrid>
+      {Array.from({ length: 4 }).map((_, index) => (
+        <Card
+          key={`metric-skeleton-${index}`}
+          elevation={0}
+          sx={(theme) => ({
+            gridColumn: { xs: "span 12", sm: "span 6", md: "span 3" },
+            borderRadius: "10px",
+            border: "1px solid",
+            borderColor: "divider",
+            backgroundColor: alpha(
+              theme.palette.background.paper,
+              theme.palette.mode === "dark" ? 0.98 : 0.96
+            ),
+            boxShadow: "0 18px 48px rgba(0,0,0,0.16)"
+          })}
+        >
+          <CardContent>
+            <Skeleton variant="text" width="42%" height={24} />
+            <Skeleton variant="text" width="58%" height={44} sx={{ mt: 1 }} />
+            <Skeleton variant="rounded" width={112} height={30} sx={{ mt: 1.25, borderRadius: "10px" }} />
+          </CardContent>
+        </Card>
+      ))}
+
+      <Card
+        elevation={0}
+        sx={(theme) => ({
+          gridColumn: { xs: "span 12", md: "span 8" },
+          borderRadius: "10px",
+          border: "1px solid",
+          borderColor: "divider",
+          backgroundColor: alpha(
+            theme.palette.background.paper,
+            theme.palette.mode === "dark" ? 0.96 : 0.94
+          ),
+          boxShadow: "0 24px 60px rgba(0,0,0,0.18)"
+        })}
+      >
+        <CardContent sx={{ p: 2.25 }}>
+          <Stack spacing={1.25}>
+            <Skeleton variant="text" width="26%" height={22} />
+            <Skeleton variant="text" width="38%" height={34} />
+            <Divider sx={{ borderColor: "divider" }} />
+            <Box
+              sx={{
+                display: "grid",
+                gridTemplateColumns: { xs: "1fr", sm: "repeat(2, 1fr)" },
+                gap: 1.5
+              }}
+            >
+              {Array.from({ length: 4 }).map((_, index) => (
+                <Skeleton key={`panel-card-${index}`} variant="rounded" height={128} sx={{ borderRadius: "10px" }} />
+              ))}
+            </Box>
+          </Stack>
+        </CardContent>
+      </Card>
+
+      <Card
+        elevation={0}
+        sx={(theme) => ({
+          gridColumn: { xs: "span 12", md: "span 4" },
+          borderRadius: "10px",
+          border: "1px solid",
+          borderColor: "divider",
+          backgroundColor: alpha(
+            theme.palette.background.paper,
+            theme.palette.mode === "dark" ? 0.96 : 0.94
+          ),
+          boxShadow: "0 24px 60px rgba(0,0,0,0.18)"
+        })}
+      >
+        <CardContent sx={{ p: 2.25 }}>
+          <Stack spacing={1.25}>
+            <Skeleton variant="text" width="34%" height={22} />
+            <Skeleton variant="text" width="52%" height={34} />
+            <Divider sx={{ borderColor: "divider" }} />
+            {Array.from({ length: 4 }).map((_, index) => (
+              <Skeleton key={`alert-row-${index}`} variant="rounded" height={52} sx={{ borderRadius: "10px" }} />
+            ))}
+          </Stack>
+        </CardContent>
+      </Card>
+
+      <Card
+        elevation={0}
+        sx={(theme) => ({
+          gridColumn: "span 12",
+          borderRadius: "10px",
+          border: "1px solid",
+          borderColor: "divider",
+          backgroundColor: alpha(
+            theme.palette.background.paper,
+            theme.palette.mode === "dark" ? 0.96 : 0.94
+          ),
+          boxShadow: "0 24px 60px rgba(0,0,0,0.18)"
+        })}
+      >
+        <CardContent sx={{ p: 2.25 }}>
+          <Stack spacing={1.25}>
+            <Skeleton variant="text" width="24%" height={22} />
+            <Skeleton variant="text" width="40%" height={34} />
+            <Divider sx={{ borderColor: "divider" }} />
+            {Array.from({ length: 6 }).map((_, index) => (
+              <Skeleton key={`table-row-${index}`} variant="rounded" height={54} sx={{ borderRadius: "10px" }} />
+            ))}
+          </Stack>
+        </CardContent>
+      </Card>
+    </PageGrid>
+  );
 }
